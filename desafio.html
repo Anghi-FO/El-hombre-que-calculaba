@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios de Programación</title>
+    <style>
+        body {
+         font-family: Arial, sans-serif;
+         background-color: #f9f9f9;
+         padding: 20px;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+         margin: 0;
+        }
+ 
+        h3, h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #e83e8c;
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+
+        form {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin-bottom: 10px;
+        }
+
+        input[type="number"] {
+            width: 70px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        button {
+            background-color: #e83e8c;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #d63384;
+        }
+
+        .caja-resultado {
+            margin-top: 10px;
+            margin-bottom: 25px;
+            font-weight: bold;
+            color: #333;
+            background: #f1f3f5;
+            padding: 10px;
+            border-radius: 4px;
+            max-width: 400px;
+            border-left: 4px solid #e83e8c;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ejercicios: El hombre que calculaba</h1>
+
+    <!-- 1. DEUDAS E INTERESES -->
+    <h3>La Deuda y sus Intereses</h3>
+    <form>
+        Capital inicial: <input type="number" id="capital" value="100"><br><br>
+        Tasa de interés (%): <input type="number" id="tasa" value="2"><br><br>
+        Meses: <input type="number" id="meses" value="6"><br><br>
+        <button type="button" onclick="calcularDeuda()">Calcular Deuda</button>
+    </form>
+    <div class="caja-resultado" id="resDeuda">Resultado: Esperando datos...</div>
+
+
+    <!-- 2. VALOR DE LAS JOYAS -->
+    <h3>El Valor de las Joyas</h3>
+    <form>
+        Cant. Perlas: <input type="number" id="cp" value="10"> | Valor c/u: <input type="number" id="vp" value="5"><br><br>
+        Cant. Diamantes: <input type="number" id="cd" value="2"> | Valor c/u: <input type="number" id="vd" value="50"><br><br>
+        <button type="button" onclick="calcularJoyas()">Calcular Joyas</button>
+    </form>
+    <p class="caja-resultado" id="resJoyas">Resultado: Esperando datos...</p>
+
+
+    <!-- 3. ECUACIÓN CUADRÁTICA -->
+    <h2>Calculadora de Raíces Cuadráticas</h2>
+    <p>Resuelve ecuaciones de la forma: ax² + bx + c = 0</p>
+    <form>
+        Valor de a: <input type="number" id="valA" value="3"><br><br>
+        Valor de b: <input type="number" id="valB" value="6"><br><br>
+        Valor de c: <input type="number" id="valC" value="-3"><br><br>
+        <button type="button" id="btnCuadratica">Calcular Raíces</button>
+    </form>
+    <p class="caja-resultado" id="resCuadratica">Resultado: Esperando datos...</p>
+
+
+    <!-- 4. ESTIMACIÓN DE PI -->
+    <h2>Estimación del Valor de Pi</h2>
+    <form>
+        Ingrese el valor de n: <input type="number" id="numN" value="100"><br><br>
+        <button type="button" id="btnPi">Calcular Pi</button>
+    </form>
+    <p class="caja-resultado" id="resPi">Resultado: Esperando datos...</p>
+
+
+    <!-- SCRIPTS DE JAVASCRIPT -->
+    <script>
+        // --- 1. Script Deuda ---
+        function calcularDeuda() {
+            let cap = Number(document.getElementById("capital").value);
+            let tasa = Number(document.getElementById("tasa").value) / 100;
+            let meses = Number(document.getElementById("meses").value);
+
+            let interes = cap * tasa * meses;
+            let total = cap + interes;
+            let cuota = total / meses;
+
+            document.getElementById("resDeuda").innerText = 
+                "Interés: " + interes + " | Total: " + total + " | Deuda mensual: " + cuota.toFixed(2);
+        }
+
+        // --- 2. Script Joyas ---
+        function calcularJoyas() {
+            let cp = Number(document.getElementById("cp").value);
+            let vp = Number(document.getElementById("vp").value);
+            let cd = Number(document.getElementById("cd").value);
+            let vd = Number(document.getElementById("vd").value);
+
+            let totalPerlas = cp * vp;
+            let totalDiamantes = cd * vd;
+            let valorTotal = totalPerlas + totalDiamantes;
+
+            document.getElementById("resJoyas").innerText = 
+                "Perlas: " + totalPerlas + " | Diamantes: " + totalDiamantes + " | Total: " + valorTotal;
+        }
+
+        // --- 3. Script Ecuación Cuadrática ---
+        function resolverCuadratica() {
+            let a = parseFloat(document.getElementById("valA").value);
+            let b = parseFloat(document.getElementById("valB").value);
+            let c = parseFloat(document.getElementById("valC").value);
+
+            if (isNaN(a) || isNaN(b) || isNaN(c)) {
+                document.getElementById("resCuadratica").innerText = "Por favor, ingresa todos los números.";
+                return;
+            }
+
+            let D = (b * b) - (4 * a * c);
+            let mensaje = "";
+
+            if (D > 0) {
+                let x1 = (-b + Math.sqrt(D)) / (2 * a);
+                let x2 = (-b - Math.sqrt(D)) / (2 * a);
+                mensaje = "La ecuación tiene dos raíces: x1 = " + x1.toFixed(2) + " | x2 = " + x2.toFixed(2);
+            } else if (D === 0) {
+                let x = -b / (2 * a);
+                mensaje = "La ecuación tiene una raíz: x = " + x.toFixed(2);
+            } else {
+                mensaje = "La ecuación no tiene raíces reales";
+            }
+
+            document.getElementById("resCuadratica").innerText = mensaje;
+        }
+        document.getElementById("btnCuadratica").addEventListener("click", resolverCuadratica);
+
+        // --- 4. Script Estimación de Pi ---
+        function estimarPi() {
+            let n = parseInt(document.getElementById("numN").value);
+
+            // Validación de error para números grandes como 1,000,000
+            if (isNaN(n) || n <= 0 || n >= 1000000) {
+                document.getElementById("resPi").innerText = "Error";
+                return;
+            }
+
+            let suma = 0;
+            for (let k = 1; k <= n; k++) {
+                suma = suma + (1 / (k * k));
+            }
+
+            let piEstimado = Math.sqrt(6 * suma);
+            document.getElementById("resPi").innerText = "Pi estimado: " + piEstimado.toFixed(6);
+        }
+        document.getElementById("btnPi").addEventListener("click", estimarPi);
+    </script>
+
+</body>
+</html>
